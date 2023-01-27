@@ -1,0 +1,8 @@
+Methods for Multiple classes
+
++rand: Random <<static>>
+    lots of things can be random in this game: actions, events,
+    even things happening in the background
++COLOR_MASK: int <<static>>
+    could be used on any type of art, such as background, sprites,
+    platforms, etc
