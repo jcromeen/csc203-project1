@@ -57,11 +57,11 @@ public final class VirtualWorld extends PApplet {
         double appTime = (System.currentTimeMillis() - startTimeMillis) * 0.001;
         double frameTime = (appTime - scheduler.currentTime)/timeScale;
         this.update(frameTime);
-        Functions.drawViewport(view);
+        view.drawViewport();
     }
 
     public void update(double frameTime){
-        Functions.updateOnTime(scheduler, frameTime);
+        scheduler.updateOnTime(frameTime);
     }
 
     // Just for debugging and for P5
@@ -70,7 +70,7 @@ public final class VirtualWorld extends PApplet {
         Point pressed = mouseToPoint();
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-        Optional<Entity> entityOptional = Functions.getOccupant(world, pressed);
+        Optional<Entity> entityOptional = world.getOccupant(pressed);
         if (entityOptional.isPresent()) {
             Entity entity = entityOptional.get();
             System.out.println(entity.id + ": " + entity.kind + " : " + entity.health);
@@ -80,12 +80,12 @@ public final class VirtualWorld extends PApplet {
 
     public void scheduleActions(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
         for (Entity entity : world.entities) {
-            Functions.scheduleActions(entity, scheduler, world, imageStore);
+            scheduler.scheduleActions(entity, world, imageStore);
         }
     }
 
     private Point mouseToPoint() {
-        return Functions.viewportToWorld(view.viewport, mouseX / TILE_WIDTH, mouseY / TILE_HEIGHT);
+        return view.viewport.viewportToWorld(mouseX / TILE_WIDTH, mouseY / TILE_HEIGHT);
     }
 
     public void keyPressed() {
@@ -99,7 +99,7 @@ public final class VirtualWorld extends PApplet {
                 case LEFT -> dx -= 1;
                 case RIGHT -> dx += 1;
             }
-            Functions.shiftView(view, dx, dy);
+            view.shiftView(dx, dy);
         }
     }
 
@@ -129,10 +129,10 @@ public final class VirtualWorld extends PApplet {
         this.world = new WorldModel();
         try {
             Scanner in = new Scanner(new File(file));
-            Functions.load(world, in, imageStore, createDefaultBackground(imageStore));
+            world.load(in, imageStore, createDefaultBackground(imageStore));
         } catch (FileNotFoundException e) {
             Scanner in = new Scanner(file);
-            Functions.load(world, in, imageStore, createDefaultBackground(imageStore));
+            world.load(in, imageStore, createDefaultBackground(imageStore));
         }
     }
 

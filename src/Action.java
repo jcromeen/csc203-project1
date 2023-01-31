@@ -15,4 +15,54 @@ public final class Action {
         this.imageStore = imageStore;
         this.repeatCount = repeatCount;
     }
+
+    public static Action createAnimationAction(Entity entity, int repeatCount) {
+        return new Action(ActionKind.ANIMATION, entity, null, null, repeatCount);
+    }
+
+    public static Action createActivityAction(Entity entity, WorldModel world, ImageStore imageStore) {
+        return new Action(ActionKind.ACTIVITY, entity, world, imageStore, 0);
+    }
+
+    public void executeAction(EventScheduler scheduler) {
+        switch (this.kind) {
+            case ACTIVITY:
+                this.executeActivityAction(scheduler);
+                break;
+
+            case ANIMATION:
+                this.executeAnimationAction(scheduler);
+                break;
+        }
+    }
+
+    public void executeActivityAction(EventScheduler scheduler) {
+        switch (this.entity.kind) {
+            case SAPLING:
+                entity.executeSaplingActivity(this.world, this.imageStore, scheduler);
+                break;
+            case TREE:
+                entity.executeTreeActivity(this.world, this.imageStore, scheduler);
+                break;
+            case FAIRY:
+                entity.executeFairyActivity(this.world, this.imageStore, scheduler);
+                break;
+            case DUDE_NOT_FULL:
+                entity.executeDudeNotFullActivity(this.world, this.imageStore, scheduler);
+                break;
+            case DUDE_FULL:
+                entity.executeDudeFullActivity(this.world, this.imageStore, scheduler);
+                break;
+            default:
+                throw new UnsupportedOperationException(String.format("executeActivityAction not supported for %s", this.entity.kind));
+        }
+    }
+
+    public void executeAnimationAction(EventScheduler scheduler) {
+        entity.nextImage();
+
+        if (this.repeatCount != 1) {
+            scheduler.scheduleEvent(this.entity, createAnimationAction(this.entity, Math.max(this.repeatCount - 1, 0)), entity.getAnimationPeriod());
+        }
+    }
 }
