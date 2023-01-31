@@ -14,7 +14,7 @@ public final class EventScheduler {
         this.currentTime = 0;
     }
 
-    public void removePendingEvent(Event event) {
+    private void removePendingEvent(Event event) {
         List<Event> pending = this.pendingEvents.get(event.entity);
 
         if (pending != null) {

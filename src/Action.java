@@ -36,7 +36,7 @@ public final class Action {
         }
     }
 
-    public void executeActivityAction(EventScheduler scheduler) {
+    private void executeActivityAction(EventScheduler scheduler) {
         switch (this.entity.kind) {
             case SAPLING:
                 entity.executeSaplingActivity(this.world, this.imageStore, scheduler);
@@ -58,7 +58,7 @@ public final class Action {
         }
     }
 
-    public void executeAnimationAction(EventScheduler scheduler) {
+    private void executeAnimationAction(EventScheduler scheduler) {
         entity.nextImage();
 
         if (this.repeatCount != 1) {
