@@ -48,32 +48,32 @@ public final class EventScheduler {
     public void scheduleActions(Entity entity, WorldModel world, ImageStore imageStore) {
         switch (entity.kind) {
             case DUDE_FULL:
-                scheduleEvent(entity, Action.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Activity(entity, world, imageStore), entity.actionPeriod);
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             case DUDE_NOT_FULL:
-                scheduleEvent(entity, Action.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Activity(entity, world, imageStore), entity.actionPeriod);
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             case OBSTACLE:
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             case FAIRY:
-                scheduleEvent(entity, Action.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Activity(entity, world, imageStore), entity.actionPeriod);
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             case SAPLING:
-                scheduleEvent(entity, Action.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Activity(entity, world, imageStore), entity.actionPeriod);
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             case TREE:
-                scheduleEvent(entity, Action.createActivityAction(entity, world, imageStore), entity.actionPeriod);
-                scheduleEvent(entity, Action.createAnimationAction(entity, 0), entity.getAnimationPeriod());
+                scheduleEvent(entity, new Activity(entity, world, imageStore), entity.actionPeriod);
+                scheduleEvent(entity, new Animation(entity, 0), entity.getAnimationPeriod());
                 break;
 
             default:
